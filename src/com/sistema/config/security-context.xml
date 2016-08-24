@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+	<security:http use-expressions="true">
+		<security:intercept-url pattern="/" access="permitAll" />
+		<security:intercept-url pattern="/menu/**" access="permitAll" />
+		<security:intercept-url pattern="/resources/**" access="permitAll" />
+		
+		<security:intercept-url pattern="/jQueryPrubas" access="permitAll" />
+		<security:intercept-url pattern="/login" access="permitAll" />
+		<security:intercept-url pattern="/logout" access="isAuthenticated()" />
+		<security:intercept-url pattern="/menuAdmin" access="isAuthenticated()" />
+		<security:intercept-url pattern="/historia/**" access="isAuthenticated()" />
+		<security:intercept-url pattern="/ficha/**" access="isAuthenticated()" />
+		<security:intercept-url pattern="/consultas/**" access="isAuthenticated()" />
+		<security:intercept-url pattern="/usuarios/**" access="isAuthenticated()" />
+		<security:intercept-url pattern="/**" access="denyAll" />
+		
+		<security:form-login login-page="/login"
+			always-use-default-target="true" default-target-url="/menuAdmin" />
+		<security:logout logout-success-url="/logout"
+			invalidate-session="true" />
+	</security:http>
+	<security:authentication-manager>
+	<security:authentication-provider ref="customAuthenticationProvider" />
+
+
+
+</security:authentication-manager>
+	<bean id="customAuthenticationProvider" class="com.sistema.config.CustomAuthenticationProvider"/>
+
+	<bean id="customUserDetailsService" class="com.sistema.config.CustomUserDetailsService"/>
+
+</beans>
