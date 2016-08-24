@@ -32,6 +32,7 @@ public class CustomUserDetailsService implements UserDetailsService{
 			User user = new User(usuario.getMail(), usuario.getPassword(), authorities);
 			return user;
 		} else {
+			System.out.println("hola");
 			throw new UsernameNotFoundException("Usuario no encontrado");
 		}
 		

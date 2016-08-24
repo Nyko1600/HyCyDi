@@ -43,12 +43,13 @@
 					<div class="panel-body">
 						<div class="row">
 							<div class="col-lg-12">
-								<form name='f' class="form-group text-center" action="j_spring_security_check" method='POST' style="display: block;">
+							
+								<form name='f' class="form-group text-center" action="<c:url value='j_spring_security_check'/>" method='POST' style="display: block;">
 									<div class="form-group">
-										<input type='text' name='j_username' value='' class="form-control" placeholder="Email">
+										<input type='text' name='username' class="form-control" placeholder="Email">
 									</div>
 									<div class="form-group">
-										<input type='password' name='j_password' class="form-control" placeholder="Contraseña" />
+										<input type='password' name='password' class="form-control" placeholder="Contraseña" />
 									</div>
 									<div class="form-group text-center"> 
 									<input type="checkbox" tabindex="3" class="" name="remember" id="remember"> 

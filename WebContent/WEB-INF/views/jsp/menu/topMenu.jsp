@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
  <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <c:import url="/WEB-INF/views/jsp/menu/tags.jsp"/>
  <div class="navbar-wrapper">
       <div class="container-fluid">
@@ -50,10 +51,10 @@
       </div>
     </div>
     
-    <sec:authorize access="isAuthenticated()">
+<sec:authorize access="isAuthenticated()">
     <sec:authentication property="principal" var="principal"/>
-    <c:set var="userMail" value="${principal}" scope="session"/>
-  
+    <c:set var="usuarioSession" value="${principal}" scope="session"/>
+   
     </sec:authorize>
     
     
