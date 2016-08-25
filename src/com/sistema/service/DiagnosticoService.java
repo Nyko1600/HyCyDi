@@ -28,17 +28,13 @@ public class DiagnosticoService {
 	
 	public void saveOrUpdate(Diagnostico diagnostico){
 		
-				
-		try {
+			
 			if (diagnostico.getId_diagnostico() == 0 ) {
 				diagnosticoDao.save(diagnostico);
 			}else{
 				
 				diagnosticoDao.update(diagnostico);
 			}
-		} catch (Exception e) {
-			System.err.println("SaveOrUpdate-Diagnostico_Service: "+ e.getMessage());
-		}
 	}
 	
 	
