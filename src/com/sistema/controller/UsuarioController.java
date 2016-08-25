@@ -100,13 +100,10 @@ public class UsuarioController {
 			@ModelAttribute("domicilio") Domicilio dom){
 	
 		
-		try {
 			model.addAttribute("adminForm",new Usuario());//instacia vacia para completar en /save x ejemplo
 			model.addAttribute("domicilio",new Domicilio());
 			model.addAttribute("resultadoCargar",resultado);
-		} catch (Exception e) {
-			System.out.println("AdminControler" + e.getMessage());
-		}
+		
 		
 		return "/jsp/usuario/administradorForm";
 	}
@@ -114,14 +111,11 @@ public class UsuarioController {
 	@RequestMapping("/profesional")
 	public String showProfesional(Model model,@ModelAttribute("profesionalForm") Usuario user,
 			@ModelAttribute("resultado") String resultado){
-		try {
+	
 			model.addAttribute("profesionalForm",new Usuario());
 			model.addAttribute("domicilio",new Domicilio());
 			model.addAttribute("resultadoCargar",resultado);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		return "/jsp/usuario/profesionalForm";
 	}
 	
@@ -129,15 +123,11 @@ public class UsuarioController {
 	public String showPaciente(Model model,@ModelAttribute("pacienteForm") Usuario user,
 			@ModelAttribute("resultado") String resultado){
 		
-		try {
+		
 			model.addAttribute("pacienteForm",new Usuario());
 			model.addAttribute("domicilio",new Domicilio());
 			model.addAttribute("resultadoCargar",resultado);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+				
 		return "/jsp/usuario/pacienteForm";
 	}
 	
@@ -153,22 +143,22 @@ public class UsuarioController {
 			@RequestParam(value="id_domicilio") int id_domicilio			
 			){
 		
-			try {	
-				Domicilio domicilio = new Domicilio(id_domicilio,prov,loc,dir);
+			
+				try {
+					Domicilio domicilio = new Domicilio(id_domicilio,prov,loc,dir);
+					model.addAttribute("adminForm", admin);
+					model.addAttribute("domicilio",domicilio);
+					System.out.println("domiclio:" + domicilio);
+					usuarioService.saveOrUpdate(admin);
+					System.out.println("usuario_id: " + admin.getId_usuario() );
+					domicilioService.saveOrUpdate(admin, domicilio);
 					
-				
-				model.addAttribute("adminForm", admin);
-				model.addAttribute("domicilio",domicilio);
-				System.out.println("domiclio:" + domicilio);
-				usuarioService.saveOrUpdate(admin);
-				System.out.println("usuario_id: " + admin.getId_usuario() );
-				domicilioService.saveOrUpdate(admin, domicilio);
-				
-				ra.addAttribute("resultado", "Datos Cargados Correctamente");
-			} catch (Exception e) {
-				ra.addAttribute("resultado", "Error al Cargar Los Datos");	
-				
-			}
+					ra.addAttribute("resultado", "Datos Cargados Correctamente");
+					
+				} catch (Exception e) {
+					ra.addAttribute("resultado", "Error al Cargar los Datos");
+					e.printStackTrace();
+				}		
 			
 			return "redirect:/usuarios/administrador";
 
@@ -193,7 +183,7 @@ public class UsuarioController {
 				ra.addAttribute("resultado", "Datos Cargados Correctamente");
 			} catch (Exception e) {
 				ra.addAttribute("resultado", "Error al Cargar Los Datos");	
-				
+				e.printStackTrace();
 			}
 			
 			return "redirect:/usuarios/profesional";
@@ -218,7 +208,7 @@ public class UsuarioController {
 				ra.addAttribute("resultado", "Datos Cargados Correctamente");
 			} catch (Exception e) {
 				ra.addAttribute("resultado", "Error al Cargar Los Datos");
-				
+				e.printStackTrace();
 			}
 			
 			return "redirect:/usuarios/paciente";
@@ -239,7 +229,8 @@ public class UsuarioController {
 		System.out.println("US_CONTROLLER-DOM: "+ dom.getId_domicilio());
 			
 		} catch (Exception e) {
-			System.out.println("Controllador UsuarioUpdate: " + e.getMessage());
+			System.out.println("Controllador Usuario Update: " + e.getMessage());
+		
 		}
 		
 		return "/jsp/usuario/administradorForm";
@@ -255,8 +246,6 @@ public class UsuarioController {
 			Domicilio dom = domicilioService.findByUsuario(id_prof);
 			model.addAttribute("domicilio",dom);
 			
-		System.out.println("US_CONTROLLER: "+ usuario.getId_usuario());
-		System.out.println("US_CONTROLLER-DOM: "+ dom.getId_domicilio());
 			
 		} catch (Exception e) {
 			System.out.println("Controllador UsuarioUpdate: " + e.getMessage());
@@ -275,11 +264,9 @@ public class UsuarioController {
 			Domicilio dom = domicilioService.findByUsuario(id_pac);
 			model.addAttribute("domicilio",dom);
 			
-		System.out.println("US_CONTROLLER: "+ usuario.getId_usuario());
-		System.out.println("US_CONTROLLER-DOM: "+ dom.getId_domicilio());
-			
 		} catch (Exception e) {
 			System.out.println("Controllador PacienteUpdate: " + e.getMessage());
+			e.printStackTrace();
 		}
 		
 		return "/jsp/usuario/pacienteForm";
@@ -294,12 +281,14 @@ public class UsuarioController {
 			Usuario usuario = usuarioService.findById(id_usu);
 			usuarioService.Delete(usuario);
 			ra.addFlashAttribute("delete", "Usuario Eliminado Correctamente");
-			return "redirect:/usuarios/usuariosList";
 		} catch (Exception e) {
 			System.out.println("Controllador UsuarioDelete: " + e.getMessage());
 			ra.addFlashAttribute("delete", "Usuario NO Eliminado");
-			return "redirect:/usuarios/usuariosList";
+			e.printStackTrace();
 		}
+		
+		return "redirect:/usuarios/usuariosList";
+		
 		
 	}
 	
@@ -311,13 +300,14 @@ public class UsuarioController {
 			Usuario usuario = usuarioService.findById(id_usu);
 			usuarioService.Delete(usuario);
 			ra.addFlashAttribute("delete", "Profesional Eliminado Correctamente");
-			return "redirect:/usuarios/profesionalList";		
+				
 		} catch (Exception e) {
 			System.out.println("Controllador UsuarioDelete: " + e.getMessage());
 			ra.addFlashAttribute("delete", "Profesional NO Eliminado");
-			return "redirect:/usuarios/profesionalList";
+			e.printStackTrace();
+			
 		}
-		
+		return "redirect:/usuarios/profesionalList";
 		
 	}
 	
@@ -329,35 +319,30 @@ public class UsuarioController {
 			Usuario usuario = usuarioService.findById(id_usu);
 			usuarioService.Delete(usuario);
 			ra.addFlashAttribute("delete", "Paciente Eliminado Correctamente");
-			return "redirect:/usuarios/pacienteList";		
+					
 		} catch (Exception e) {
 			System.out.println("Controllador UsuarioDelete: " + e.getMessage());
 			ra.addFlashAttribute("delete", "Paciente NO Eliminado");
-			return "redirect:/usuarios/pacienteList";	
+			e.printStackTrace();
 		}
-		
+		return "redirect:/usuarios/pacienteList";	
 	}
 	@RequestMapping(value="/searchByName",method=RequestMethod.GET)
 	public ModelAndView findAllUser(Model model,@RequestParam("apellido") String apellido, HttpServletRequest request){
 		HttpSession session = request.getSession();
-		System.out.println("SESSION Search: " +session.getAttribute("usuarioSession"));
 		Usuario usuario = (Usuario) session.getAttribute("usuarioSession");
-		System.out.println("SESSION US: " +usuario);
 		
 		try {
 			if(usuario.getRol().equals("ROLE_ADMIN")){
-				System.out.println("IF ADMIN");
 				List<Usuario> usuarios = usuarioService.findAllByName(apellido);
 				ModelAndView modelo = new ModelAndView("/jsp/usuario/usuariosView", "usuarios", usuarios);
 				return modelo;	
 			}else if (usuario.getRol().equals("ROLE_PROFESIONAL") ) {
-				System.out.println("IF PRO");
 				List<Usuario> usuarios = usuarioService.findAllByNamePacientes(apellido);
 				ModelAndView modelo = new ModelAndView("/jsp/usuario/profesionalesView", "pacientes", usuarios);
 				return modelo;	
 			}else {
 			ModelAndView modelo = new ModelAndView("/jsp/usuario/usuariosView");
-			System.out.println("NO entra IF: " + usuario.getRol());
 			return modelo;
 			}
 		} catch (Exception e) {
@@ -373,14 +358,10 @@ public class UsuarioController {
 	public ModelAndView findAllUserDNI(Model model,@RequestParam("dni") int dni, HttpServletRequest request){
 		
 		HttpSession session = request.getSession();
-		System.out.println("SESSION Search: " +session.getAttribute("usuarioSession"));
 		Usuario usuario = (Usuario) session.getAttribute("usuarioSession");
-		System.out.println("SESSION US: " +usuario);
 		
 		try {
-			
-			//model.addAttribute("usuarios",usuario);
-			
+	
 			if(usuario.getRol().equals("ROLE_ADMIN")){
 				Usuario usuarioDni = usuarioService.findByDNI(dni);
 				System.out.println("USUARIOS_DNI: " + usuarioDni);
@@ -410,16 +391,14 @@ public class UsuarioController {
 	public Map<String, Object> findAllUsers(Model model,@RequestParam("term") String apellido){
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<Usuario> usuarios = usuarioService.findAllByName(apellido);
-		//System.out.println("LISTUsuriso: " + admins.toString());
 		model.addAttribute("usuarios",usuarios);
 		
-		System.out.println("USUARIOS: " + usuarios);
 		for (int i = 0; i < usuarios.size(); i++) {
 			Usuario us = usuarios.get(i);
 			map.put("id_usuario",us.getId_usuario());
 			map.put("Apellido",us.getApellido1());
 		}
-		//System.out.println("LISTUsuriso: " + map);
+		
 		return map;
 		
 	}

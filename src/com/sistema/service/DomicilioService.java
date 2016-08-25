@@ -25,9 +25,7 @@ public class DomicilioService {
 	DomicilioDAO domicilioDAO;
 	
 	public void saveOrUpdate(Usuario usuario, Domicilio dir){
-		
-		try {
-			
+					
 			if (dir.getId_domicilio() == 0) {
 				dir.setUsuario(usuario);
 				domicilioDAO.save(dir);
@@ -36,10 +34,7 @@ public class DomicilioService {
 				domicilioDAO.update(dir);
 			
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.err.println("saveOrUpdate-DomicilioService:" + e.getMessage());
-		}
+	
 	}
 	
 	public Domicilio findByUsuario(int id){

@@ -23,7 +23,7 @@ public class HistoriaService {
 	public void saveOrUpdate(HistoriaClinica historia){
 		
 				
-		try {
+		
 			if (historia.getId_historia() == 0 
 					&& historiaDao.findByUsuario(historia.getUsuario().getId_usuario()) == null
 					&& historiaDao.findByNumero(historia.getNro_historia()) == null) {
@@ -33,9 +33,6 @@ public class HistoriaService {
 				System.err.println("Verificar Historia");
 				//historiaDao.update(historia);
 			}
-		} catch (Exception e) {
-			System.err.println("SaveOrUpdate-historiaService: "+ e.getMessage());
-		}
 	}
 	
 	public HistoriaClinica findById(int id){

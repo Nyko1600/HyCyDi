@@ -19,7 +19,6 @@ public class UsuarioService {
 	
 	public void saveOrUpdate(Usuario usuario){
 		
-		try {
 			if (usuario.getId_usuario() == 0) {
 				usuario.setFechaAlta(new Timestamp(new Date().getTime()));
 				
@@ -28,9 +27,6 @@ public class UsuarioService {
 				//usuario.setFechaAlta(usuario.getFechaAlta());
 				usuarioDao.update(usuario);
 			}
-		} catch (Exception e) {
-			System.err.println("SaveOrUpdate-UsuarioService: "+ e.getMessage());
-		}
 	}
 	
 	public List<Usuario> findAll() {
