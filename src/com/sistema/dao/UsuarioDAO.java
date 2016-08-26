@@ -17,8 +17,9 @@ public interface UsuarioDAO {
 	public Usuario findByDNI(int dni);
 	public List<Usuario> findByName(String name);
 	public Usuario findByMail(String m);
-	List<Usuario> findByNamePacientes(String apellido1);
-	Usuario findByDNIPacientes(int dni);
+	public List<Usuario> findByNamePacientes(String apellido1);
+ 	public Usuario findByDNIPacientes(int dni);
+	public List<Usuario> findPacientesSinHistoria();
 	
 
 }

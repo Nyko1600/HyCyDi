@@ -52,10 +52,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 		
 		@RequestMapping(value="/listarConsultas",method=RequestMethod.GET)
 		public String showConsultas(Model model,@ModelAttribute("consultaForm") Consulta consultaForm){
-			//List<Usuario> pacientes = usuarioService.findAllPacientes();
-			List<HistoriaClinica> historias = historiaService.findAllHistorias();
-			//model.addAttribute("pacientes",pacientes);
-			model.addAttribute("historias",historias);
+			try {
+				List<HistoriaClinica> historias = historiaService.findAllHistorias();
+				model.addAttribute("historias",historias);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 			return "/jsp/historia/consultasList";
 		}
 		
@@ -63,13 +67,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 		public String showConsulta(Model model, @PathVariable("id_his") int id_historia,
 				@ModelAttribute("consultaForm") Consulta consultaForm){
 			
-			try {
-				Consulta consulta = new Consulta();
-				model.addAttribute("id_historia", id_historia);
-				model.addAttribute("consultaForm",consultaForm);
-			} catch (Exception e) {
-				System.err.println("Error en Crear Ficha: " + e.getMessage());
-			}
+				try {
+					Consulta consulta = new Consulta();
+					model.addAttribute("id_historia", id_historia);
+					model.addAttribute("consultaForm",consultaForm);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			
 			return "/jsp/historia/consultaForm";
 		}
 		
@@ -84,35 +90,41 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 				@RequestParam("tratamiento")String tratamiento,
 				@RequestParam("descripcion")String descripcion){
 			
-			try {
-				HistoriaClinica historia = historiaService.findById(id_hist);
-				Diagnostico diagnostico = new Diagnostico(titulo,tratamiento,descripcion);
-				Usuario usuario = usuarioService.findByMail(usuarioMail);
-				Consulta consulta = new Consulta(anamnesis, exploracion, observaciones, historia, usuario, diagnostico);
-				diagnostico.setConsulta(consulta);
 			
-				consultaService.saveOrUpdate(consulta);
-				diagnosticoService.saveOrUpdate(diagnostico);
+				try {
+					HistoriaClinica historia = historiaService.findById(id_hist);
+					Diagnostico diagnostico = new Diagnostico(titulo,tratamiento,descripcion);
+					Usuario usuario = usuarioService.findByMail(usuarioMail);
+					Consulta consulta = new Consulta(anamnesis, exploracion, observaciones, historia, usuario, diagnostico);
+					diagnostico.setConsulta(consulta);
+
+					consultaService.saveOrUpdate(consulta);
+					diagnosticoService.saveOrUpdate(diagnostico);
+					
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				
-			} catch (Exception e) {
-				System.err.println("ERROR en CONTROLLER" + e.getMessage());
-			}
 			return "/jsp/historia/consultaForm";
 		}
 		
 		
 		@RequestMapping(value="/searchByName",method=RequestMethod.GET)
 		public ModelAndView findAllUser(Model model,@RequestParam("apellido") String apellido){
-			//List<Usuario> pacientes = usuarioService.findAllPacientes();
-			List<HistoriaClinica> historias = historiaService.findByName(apellido);
-			//List<HistoriaClinica> historias = historiaService.findAllHistorias();
-			System.out.println("7878798798797: " + historias);
 			
-			ModelAndView modelo = new ModelAndView("/jsp/historia/consultasList");
-			
-			modelo.addObject("historias",historias);
-			return modelo;
-			
+			ModelAndView modelo;
+			try {
+				List<HistoriaClinica> historias = historiaService.findByName(apellido);
+				modelo = new ModelAndView("/jsp/historia/consultasList");
+				modelo.addObject("historias",historias);
+				return modelo;
+			} catch (Exception e) {
+				e.printStackTrace();
+				modelo = new ModelAndView("/jsp/historia/consultasList");
+				return modelo;
+			}
+						
 		}
 		
 		

@@ -95,11 +95,8 @@ public class AntecedentesService {
 	
 	
 	public void deleteAntecedentes(Set<Antecedentes> set) {
-		try {
 			antecedentesDAO.deleteAntecedentes(set);
-		} catch (Exception e) {
-			System.out.println("DELETE AntecedentesService: "+e.getMessage());
-		}
+		
 	}
 
 	

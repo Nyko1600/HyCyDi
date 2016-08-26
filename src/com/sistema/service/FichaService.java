@@ -24,8 +24,6 @@ public class FichaService {
 	
 	public void saveOrUpdate(Ficha ficha){
 		
-				
-		try {
 			if (ficha.getId_ficha() == 0 ) {
 				ficha.setFecha(new Timestamp(new Date().getTime()));
 				fichaDao.save(ficha);
@@ -33,9 +31,7 @@ public class FichaService {
 				
 				fichaDao.update(ficha);
 			}
-		} catch (Exception e) {
-			System.err.println("SaveOrUpdate-fichaService: "+ e.getMessage());
-		}
+		
 	}
 	
 	public void delete(Ficha ficha){

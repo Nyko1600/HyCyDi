@@ -27,17 +27,14 @@ public class ConsultaService {
 	public void saveOrUpdate(Consulta consulta){
 		
 				
-		try {
-			if (consulta.getId_consulta() == 0 ) {
+		if (consulta.getId_consulta() == 0 ) {
 				consulta.setFecha(new Timestamp(new Date().getTime()));
 				consultaDao.save(consulta);
-			}else{
+		}else{
 				
 				consultaDao.update(consulta);
-			}
-		} catch (Exception e) {
-			System.err.println("SaveOrUpdate-fichaService: "+ e.getMessage());
 		}
+		
 	}
 	
 	
