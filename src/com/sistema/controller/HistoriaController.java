@@ -46,7 +46,10 @@ public class HistoriaController {
 	@RequestMapping(value="/historiaClinica",method=RequestMethod.GET)
 	public String showPacientes(Model model){
 		try {
-			List<Usuario> pacientes = usuarioService.findAllPacientes();
+
+			//List<Usuario> pacientes = usuarioService.findAllPacientes();
+			List<Usuario> pacientes = usuarioService.findPacientesSinHistoria();
+
 			Usuario paciente = new Usuario();
 			model.addAttribute("paciente",paciente);
 			model.addAttribute("pacientes",pacientes);

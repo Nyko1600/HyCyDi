@@ -44,6 +44,10 @@ public class UsuarioService {
 	public List<Usuario> findAllPacientes() {
 		return usuarioDao.findAllPacientes();
 	}
+
+	public List<Usuario> findPacientesSinHistoria() {
+		return usuarioDao.findPacientesSinHistoria();
+	}
 	
 	public Usuario findById(int id){
 		return usuarioDao.findById(id);

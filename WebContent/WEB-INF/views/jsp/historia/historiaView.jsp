@@ -36,6 +36,7 @@
 			<td><c:out value="${paciente.grupoSanguineo}"/></td>
 			<td><c:out value="${paciente.estadoCivil}"/></td>
 			<td><c:out value="${paciente.rol}"/></td>
+			
 			<td><a href='<c:url value="/historia/${paciente.id_usuario}/save"/>' class="btn btn-success text-bold">Crear Historia</a></td>
 			</tr>
 		

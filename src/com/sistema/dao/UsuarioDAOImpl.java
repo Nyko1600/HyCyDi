@@ -3,16 +3,19 @@ package com.sistema.dao;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-
+import com.sistema.pojo.HistoriaClinica;
 import com.sistema.pojo.Usuario;
 
 @Repository
@@ -46,37 +49,45 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Usuario> findAll() {
+	public List<Usuario> findAll() throws HibernateException{
 		Query query = getSession().createQuery("from Usuario us order by us.apellido1");
 		return query.list();
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Usuario> findAllAdmins() {
+	public List<Usuario> findAllAdmins() throws HibernateException{
 		Query query = getSession().createQuery("from Usuario WHERE rol = 'ROLE_ADMIN'");
 		return query.list();
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Usuario> findAllProfesionales() {
+	public List<Usuario> findAllProfesionales() throws HibernateException{
 		Query query = getSession().createQuery("from Usuario WHERE rol = 'ROLE_PROFESIONAL'");
 		return query.list();
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Usuario> findAllPacientes() {
+	public List<Usuario> findAllPacientes() throws HibernateException{
 		Query query = getSession().createQuery("from Usuario WHERE rol = 'ROLE_PACIENTE'");
 		return query.list();
 	}
 
+	@Override
+	public List<Usuario> findPacientesSinHistoria()  throws HibernateException {
+		
+		Query query = getSession().createSQLQuery("Select usuario.* from usuario left join historiaclinica On usuario.id_usuario = historiaclinica.id_usuario WHERE usuario.rol = :rol AND historiaclinica.id_usuario IS NULL")
+				.addEntity(Usuario.class)
+				.setParameter("rol","ROLE_PACIENTE");
+				
+		return query.list();
+	}
 	@SuppressWarnings("unchecked")
 	@Override
-	public Usuario findById(int id) {
-		//Query query = getSession().createQuery("from Usuario WHERE id_usuario = :id");
-		//return (Usuario) query.uniqueResult();
+	public Usuario findById(int id) throws HibernateException{
+		
 		Criteria criteria = getSession().createCriteria(Usuario.class);
 		criteria.add(Restrictions.eq("id_usuario", id));
 		return (Usuario) criteria.uniqueResult();
@@ -84,7 +95,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Usuario findByDNI(int dni) {
+	public Usuario findByDNI(int dni) throws HibernateException{
 		//Query query = getSession().createQuery("from Usuario WHERE id_usuario = :id");
 		//return (Usuario) query.uniqueResult();
 		Criteria criteria = getSession().createCriteria(Usuario.class);
@@ -94,9 +105,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Usuario findByDNIPacientes(int dni) {
-		//Query query = getSession().createQuery("from Usuario WHERE id_usuario = :id");
-		//return (Usuario) query.uniqueResult();
+	public Usuario findByDNIPacientes(int dni) throws HibernateException{
 		Criteria criteria = getSession().createCriteria(Usuario.class);
 		criteria.add(Restrictions.eq("dni", dni))
 		.add(Restrictions.eq("rol","ROLE_PACIENTE"));
@@ -104,7 +113,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 	}
 	
 	@Override
-	public Usuario findByMail(String m) {
+	public Usuario findByMail(String m) throws HibernateException{
 		Criteria query = getSession().createCriteria(Usuario.class);
 		query.add(Restrictions.eq("mail", m));
 		
@@ -113,7 +122,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Usuario> findByName(String apellido1) {
+	public List<Usuario> findByName(String apellido1) throws HibernateException{
 		
 		Criteria query = getSession().createCriteria(Usuario.class)
 		.add(Restrictions.like("apellido1", "%" + apellido1 + "%"))
@@ -124,7 +133,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Usuario> findByNamePacientes(String apellido1) {
+	public List<Usuario> findByNamePacientes(String apellido1) throws HibernateException{
 		
 		Criteria query = getSession().createCriteria(Usuario.class)
 		.add(Restrictions.like("apellido1", "%" + apellido1 + "%"))

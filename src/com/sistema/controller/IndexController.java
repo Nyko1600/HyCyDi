@@ -44,11 +44,17 @@ public class IndexController {
 		
 	@RequestMapping("/menuAdmin")
 	public String showIndexAdmin(Model model, HttpServletRequest request){
-		HttpSession session = request.getSession();
-		String mail = (String) session.getAttribute("usuarioSession");
-		Usuario us = usuarioService.findByMail(mail);
-		session.setAttribute("usuarioSession",us);
-		model.addAttribute("usuarioSession",us);
+		try {
+			HttpSession session = request.getSession();
+			String mail = (String) session.getAttribute("usuarioSession");
+			Usuario us = usuarioService.findByMail(mail);
+			session.setAttribute("usuarioSession",us);
+			model.addAttribute("usuarioSession",us);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		return "menuAdmin";
 	}
 	
