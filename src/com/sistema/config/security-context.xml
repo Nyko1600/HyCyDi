@@ -6,32 +6,47 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 
-	<security:http use-expressions="true">
+	<security:http  use-expressions="true" auto-config="true">
+	
+		<!-- Configure Security URL -->	
+		
 		<security:intercept-url pattern="/" access="permitAll" />
 		<security:intercept-url pattern="/menu/**" access="permitAll" />
 		<security:intercept-url pattern="/resources/**" access="permitAll" />
-		
-		<security:intercept-url pattern="/jQueryPrubas" access="permitAll" />
+		<security:intercept-url pattern="/jQueryPrubas" access="permitAll"/>
 		<security:intercept-url pattern="/login" access="permitAll" />
 		<security:intercept-url pattern="/logout" access="isAuthenticated()" />
 		<security:intercept-url pattern="/menuAdmin" access="isAuthenticated()" />
 		<security:intercept-url pattern="/historia/**" access="isAuthenticated()" />
 		<security:intercept-url pattern="/ficha/**" access="isAuthenticated()" />
-		<security:intercept-url pattern="/consultas/**" access="isAuthenticated()" />
-		<security:intercept-url pattern="/usuarios/**" access="isAuthenticated()" />
+		<security:intercept-url pattern="/consultas/**" access="isAuthenticated()"/>
+		<security:intercept-url pattern="/usuarios/**" access="isAuthenticated()"/>
+		<security:intercept-url pattern="/rest/**" access="permitAll"/>
 		<security:intercept-url pattern="/**" access="denyAll" />
 		
+		<!-- Configure Login and LogOut -->
 		<security:form-login login-page="/login"
 			always-use-default-target="true" default-target-url="/menuAdmin"
 			password-parameter="password" username-parameter="username" />
 		<security:logout logout-success-url="/logout" invalidate-session="true" />
+		<!-- Configure PORTS -->
+		 <security:port-mappings>
+	        <!-- Default ports -->
+	        <security:port-mapping http="80" https="443"/>
+	        <!-- Websphere default ports -->
+	        <security:port-mapping http="9080" https="9443"/>
+	        <!-- Tomcat default ports -->
+	        <security:port-mapping http="8080" https="8443"/>
+	        <!-- Jetty custom ports -->
+	        <security:port-mapping http="7777" https="7443"/>
+    	</security:port-mappings>
+		
+		
 	</security:http>
 	<security:authentication-manager>
-	<security:authentication-provider ref="customAuthenticationProvider" />
-
-
-
-</security:authentication-manager>
+		<security:authentication-provider ref="customAuthenticationProvider" />
+	</security:authentication-manager>
+	
 	<bean id="customAuthenticationProvider" class="com.sistema.config.CustomAuthenticationProvider"/>
 
 	<bean id="customUserDetailsService" class="com.sistema.config.CustomUserDetailsService"/>

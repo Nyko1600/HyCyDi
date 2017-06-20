@@ -1,40 +1,49 @@
 package com.sistema.pojo;
 
-import java.sql.Timestamp;
 
+import java.sql.Timestamp;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.springframework.context.annotation.Scope;
 
-import java.util.Set;
+import com.sistema.util.JsonDateDeserialize;
+import com.sistema.util.JsonDateSerialize;
+
+
 
 @Entity
 @Table(name="usuario")
 @Scope("session")
-public class Usuario {
+public class Usuario{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id_usuario;
-	private int dni;
+	@Column(name="nro_doc")
+	private int nro_doc;
 	private int matricula;
 	private String nombre;
 	private String apellido1;
 	private String apellido2;
 	private String mail;
+	@JsonIgnore
 	private String password;
 	private String foto;
 	private String telefono;
 	private String sexo;
 	private String fechaNacimiento;
+	@JsonIgnore
 	private Timestamp fechaAlta;
 	private String grupoSanguineo;
 	private String estadoCivil;
@@ -42,21 +51,24 @@ public class Usuario {
 	private String rol;
 	private String estado;
 	
-	@OneToOne(mappedBy = "usuario")
+	//Carga Temprana.... relación tipo casacada.
+	@JsonIgnore
+	@OneToOne(mappedBy = "usuario", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Domicilio domicilio;
 	
-	@OneToOne(mappedBy = "usuario")
+	@JsonIgnore
+	@OneToOne(mappedBy = "usuario", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private HistoriaClinica historia;
 	
 	public Usuario(){}	
 	
-	public Usuario(int id_usuario, int dni, int matricula, String nombre, String apellido1, String apellido2,
+	public Usuario(int id_usuario, int nro_doc, int matricula, String nombre, String apellido1, String apellido2,
 			String mail, String password, String foto, String telefono, String sexo, String fechaNacimiento,
 			Timestamp fechaAlta, String grupoSanguineo, String estadoCivil, String categoria, String rol,
 			String estado) {
 		super();
 		this.id_usuario = id_usuario;
-		this.dni = dni;
+		this.nro_doc = nro_doc;
 		this.matricula = matricula;
 		this.nombre = nombre;
 		this.apellido1 = apellido1;
@@ -80,11 +92,11 @@ public class Usuario {
 	public void setId_usuario(int id_usuario) {
 		this.id_usuario = id_usuario;
 	}
-	public int getDni() {
-		return dni;
+	public int getNroDoc() {
+		return nro_doc;
 	}
-	public void setDni(int dni) {
-		this.dni = dni;
+	public void setNroDoc(int nro_doc) {
+		this.nro_doc = nro_doc;
 	}
 	public int getMatricula() {
 		return matricula;
@@ -116,9 +128,11 @@ public class Usuario {
 	public void setMail(String mail) {
 		this.mail = mail;
 	}
+	@JsonIgnore
 	public String getPassword() {
 		return password;
 	}
+	@JsonIgnore
 	public void setPassword(String password) {
 		this.password = password;
 	}
@@ -146,9 +160,15 @@ public class Usuario {
 	public void setFechaNacimiento(String fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
+	//@JsonSerialize(using=JsonDateSerialize.class)
+	@JsonIgnore
 	public Timestamp getFechaAlta() {
 		return fechaAlta;
 	}
+	
+
+	//@JsonDeserialize(using = JsonDateDeserialize.class, as = Timestamp.class)
+	@JsonIgnore
 	public void setFechaAlta(Timestamp fechaAlta) {
 		this.fechaAlta = fechaAlta;
 	}
@@ -183,18 +203,28 @@ public class Usuario {
 		this.estado = estado;
 	}
 
-
+	@JsonIgnore
 	public Domicilio getDomicilio() {
 		return domicilio;
 	}
-
+	
+	
 	public void setDomicilio(Domicilio domicilio) {
 		this.domicilio = domicilio;
 	}
 
+	@JsonIgnore
+	public HistoriaClinica getHistoria() {
+		return historia;
+	}
+
+	public void setHistoria(HistoriaClinica historia) {
+		this.historia = historia;
+	}
+
 	@Override
 	public String toString() {
-		return "Usuario [id_usuario=" + id_usuario + ", dni=" + dni + ", matricula=" + matricula + ", nombre=" + nombre
+		return "Usuario [id_usuario=" + id_usuario + ", nro_doc=" + nro_doc + ", matricula=" + matricula + ", nombre=" + nombre
 				+ ", apellido1=" + apellido1 + ", apellido2=" + apellido2 + ", mail=" + mail + ", password=" + password
 				+ ", foto=" + foto + ", telefono=" + telefono + ", sexo=" + sexo + ", fechaNacimiento="
 				+ fechaNacimiento + ", fechaAlta=" + fechaAlta + ", grupoSanguineo=" + grupoSanguineo + ", estadoCivil="

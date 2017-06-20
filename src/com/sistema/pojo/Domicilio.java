@@ -1,6 +1,8 @@
 package com.sistema.pojo;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -9,6 +11,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+
+import org.codehaus.jackson.annotate.JsonBackReference;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name="domicilio")
@@ -23,8 +29,9 @@ public class Domicilio {
 	private String localidad;
 	private String direccion;
 	
-	@OneToOne
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_usuario")
+	@JsonManagedReference
 	private Usuario usuario;
 	
 	public Domicilio(){}

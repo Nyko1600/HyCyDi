@@ -13,8 +13,6 @@
                             CONTENT
   =========================================================-->
 
-
-
 <main>
 	<div class="main container"> <!-- Contendedor de los Post-->
 		<div class="row ">

@@ -51,6 +51,8 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 	@Override
 	public List<Usuario> findAll() throws HibernateException{
 		Query query = getSession().createQuery("from Usuario us order by us.apellido1");
+		
+		//System.out.println("sis: " + query.toString());
 		return query.list();
 	}
 	
@@ -84,22 +86,22 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 				
 		return query.list();
 	}
-	@SuppressWarnings("unchecked")
+
 	@Override
 	public Usuario findById(int id) throws HibernateException{
 		
-		Criteria criteria = getSession().createCriteria(Usuario.class);
-		criteria.add(Restrictions.eq("id_usuario", id));
-		return (Usuario) criteria.uniqueResult();
+		Query query = getSession().createQuery("from Usuario WHERE id_usuario = :id");
+		query.setParameter("id", id);
+		return (Usuario) query.uniqueResult();
+		
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public Usuario findByDNI(int dni) throws HibernateException{
 		//Query query = getSession().createQuery("from Usuario WHERE id_usuario = :id");
 		//return (Usuario) query.uniqueResult();
 		Criteria criteria = getSession().createCriteria(Usuario.class);
-		criteria.add(Restrictions.eq("dni", dni));
+		criteria.add(Restrictions.eq("nro_doc", dni));
 		return (Usuario) criteria.uniqueResult();
 	}
 
@@ -107,7 +109,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 	@Override
 	public Usuario findByDNIPacientes(int dni) throws HibernateException{
 		Criteria criteria = getSession().createCriteria(Usuario.class);
-		criteria.add(Restrictions.eq("dni", dni))
+		criteria.add(Restrictions.eq("nro_doc", dni))
 		.add(Restrictions.eq("rol","ROLE_PACIENTE"));
 		return (Usuario) criteria.uniqueResult();
 	}

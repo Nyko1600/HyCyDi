@@ -2,7 +2,9 @@ package com.sistema.pojo;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,6 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonBackReference;
 import org.springframework.web.bind.annotation.Mapping;
 
 @Entity
@@ -22,7 +25,7 @@ public class HistoriaClinica {
 	private int id_historia;
 	private int nro_historia;
 	
-	@OneToOne
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name="id_usuario")
 	private Usuario usuario;
 

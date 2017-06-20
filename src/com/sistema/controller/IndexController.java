@@ -1,27 +1,19 @@
 package com.sistema.controller;
 
-import java.security.KeyException;
-import java.security.PublicKey;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+
+
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.xml.crypto.dsig.keyinfo.KeyValue;
-
-import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
-
 import com.sistema.pojo.Usuario;
 import com.sistema.service.UsuarioService;
 
@@ -45,13 +37,15 @@ public class IndexController {
 	@RequestMapping("/menuAdmin")
 	public String showIndexAdmin(Model model, HttpServletRequest request){
 		try {
-			HttpSession session = request.getSession();
+			/*HttpSession session = request.getSession();
 			String mail = (String) session.getAttribute("usuarioSession");
 			Usuario us = usuarioService.findByMail(mail);
 			session.setAttribute("usuarioSession",us);
-			model.addAttribute("usuarioSession",us);
+			model.addAttribute("usuarioSession",us);*/
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
+			
+			System.out.println("Error en showIndex....");
 			e.printStackTrace();
 		}
 

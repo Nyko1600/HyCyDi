@@ -1,5 +1,6 @@
 package com.sistema.config;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.catalina.connector.Request;
@@ -22,7 +23,9 @@ public class CustomAuthenticationProvider implements AuthenticationProvider{
 	@Autowired
 	private CustomUserDetailsService customUserDetailsService;
 	
-		
+	//@Autowired
+	//private HttpServletRequest request;
+	
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 
@@ -37,6 +40,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider{
 			if (credentials.equals(user.getPassword())) {
 				
 				System.out.println("Login Correcto: ");
+			//request.getSession().setAttribute("UsuarioSession", user);
 				return new UsernamePasswordAuthenticationToken(principal, user.getPassword(), user.getAuthorities());
 			}else{
 				System.out.println("Error de Login: " + principal);
