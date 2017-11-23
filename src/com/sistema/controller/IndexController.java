@@ -1,8 +1,5 @@
 package com.sistema.controller;
 
-
-
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -27,6 +24,17 @@ public class IndexController {
 	@RequestMapping("/")
 	public String showIndex(Model model){
 		return "index";
+	}
+	
+	@RequestMapping("/login")
+	public String Login(Model model){
+		//model.addAttribute("usuarioSession");
+			return "login";
+	}
+	
+	@RequestMapping("/sistema")
+	public String showInicio(Model model){
+		return "sistema";
 	}
 		
 	@RequestMapping("/jQueryPrubas")
@@ -59,12 +67,6 @@ public class IndexController {
 		Usuario us = usuarioService.findByMail(mail);
 		session.setAttribute("usuarioSession",us);
 		return "menuProfesional";
-	}
-	
-	@RequestMapping("/login")
-	public String Login(Model model){
-		model.addAttribute("usuarioSession");
-			return "login";
 	}
 	
 	@RequestMapping("/logout")

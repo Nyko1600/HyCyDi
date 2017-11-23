@@ -6,6 +6,7 @@ import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.CriteriaSpecification;
@@ -98,11 +99,13 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 
 	@Override
 	public Usuario findByDNI(int dni) throws HibernateException{
-		//Query query = getSession().createQuery("from Usuario WHERE id_usuario = :id");
-		//return (Usuario) query.uniqueResult();
+		/*Query query = getSession().createQuery("from Usuario WHERE nro_doc = :id");
+		query.setInteger("id", dni);
+		return (Usuario) query.uniqueResult();*/
 		Criteria criteria = getSession().createCriteria(Usuario.class);
 		criteria.add(Restrictions.eq("nro_doc", dni));
-		return (Usuario) criteria.uniqueResult();
+		Usuario user = (Usuario) criteria.uniqueResult();
+		return user;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -124,12 +127,11 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Usuario> findByName(String apellido1) throws HibernateException{
-		
-		Criteria query = getSession().createCriteria(Usuario.class)
-		.add(Restrictions.like("apellido1", "%" + apellido1 + "%"))
-		//.add(Restrictions.or(Restrictions.like("apellido2", "%" + apellido1 + "%")))
-		.addOrder(Order.asc("apellido1"));
+	public List<Usuario> findByName(String nombre) throws HibernateException{
+
+		SQLQuery query = getSession().createSQLQuery("SELECT * FROM usuario as us where concat(us.nro_doc,' ',us.nombre,' ',us.apellido1,' ',us.apellido2) like :nombre");
+		query.addEntity(Usuario.class);
+		query.setParameter("nombre", "%"+nombre+"%");
 		return query.list();
 	}
 	

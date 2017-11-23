@@ -16,14 +16,14 @@
 <%-- <link rel="stylesheet" type="text/css" href='<c:url value="/resources/css/style.css"></c:url>'> --%>
 <link rel="stylesheet" type="text/css" href='<c:url value="/resources/css/jquery-ui.css"></c:url>'> 
 
-
+<%--
 <c:url value="/resources/js/jquery-ui.js" var="jqueryUiJs" /> 
 <script src="${jqueryUiJs}"></script>
 
 <script src="/resources/js/jquery-1.12.0.min.js" ></script> 
-<%-- <script src="<c:url value="/resources/js/jquery-ui.js" />"></script> --%>
+ <script src="<c:url value="/resources/js/jquery-ui.js" />"></script> 
 <script src="<c:url value="/resources/js/bootstrap.js" />"></script>
 <script src="<c:url value="/resources/js/jquery.js" />"></script>
-
+--%>
 
 </head>

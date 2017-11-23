@@ -52,7 +52,8 @@ public class UsuarioController {
 		model.addAttribute("usuarios", usuarios);
 		//model.addAttribute("usuariosList", usuariosList);
 		
-		return "/jsp/usuario/usuariosView";
+		//return "/jsp/usuario/usuariosView";
+		return "usuarios_view";
 	}
 	
 	

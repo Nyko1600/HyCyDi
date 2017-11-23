@@ -37,7 +37,6 @@ public class HuellaDAOImpl implements HuellaDAO{
 
 	@Override
 	public void save(Huella huella) {
-
 		getSession().save(huella);
 	}
 

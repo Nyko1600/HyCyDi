@@ -1,8 +1,4 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
- <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-
-<c:import url="/WEB-INF/views/jsp/menu/tags.jsp"/>
- <div class="navbar-wrapper">
+<div class="navbar-wrapper">
       <div class="container-fluid">
         <nav class="navbar navbar-default navbar-static-top">
           <div class="container-fluid">
@@ -15,6 +11,7 @@
               </button>
               <a class="navbar-brand" href="#">Sistema Hospital</a>
             </div>
+            <sec:authorize>
             <div id="navbar" class="navbar-collapse collapse">
               <ul class="nav navbar-nav">
               <li class="dropdown">
@@ -43,21 +40,10 @@
                 </ul>
             	 
              </div>
-           
+           </sec:authorize>
             	
           </div>
         </nav>
 
       </div>
     </div>
-    
-	<sec:authorize access="isAuthenticated()">
-	    <sec:authentication property="principal" var="principal"/>
-	    	<c:set var="usuarioSession" value="${principal}" scope="session"/>
-   
-    </sec:authorize>
-    
-    
-    
-    
-    

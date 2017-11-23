@@ -20,7 +20,6 @@ import com.sistema.dao.UsuarioDAO;
 import com.sistema.pojo.Usuario;
 
 @Service("CustomUserDetailsService")
-@SessionAttributes("usuarioSession")
 public class CustomUserDetailsService implements UserDetailsService{
 
 	@Autowired

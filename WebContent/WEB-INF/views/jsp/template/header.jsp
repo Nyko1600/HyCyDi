@@ -24,7 +24,7 @@
 
             <div class="">  
               <ul class="nav navbar-nav sf-menu sf-js-enabled sf-arrows" data-type="navbar">
-                <li class="active">
+                <li>
                   <a href="./">Inicio</a>
                 </li>
                 <li>
@@ -41,7 +41,7 @@
                   <a href="#">Contacto</a>
                 </li>
                 <li>
-                  <a class="btn btn-primary" href="/SistemaHistoria/login">Login</a>
+                  <a class="" href="/SistemaHistoria/login">Login</a>
                 </li>
               </ul>                           
             </div>

@@ -1,8 +1,5 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
- <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
-<c:import url="/WEB-INF/views/jsp/menu/tags.jsp"/>
- <div class="navbar-wrapper">
+<div class="navbar-wrapper">
       <div class="container-fluid">
         <nav class="navbar navbar-default navbar-static-top">
           <div class="container-fluid">
@@ -29,11 +26,11 @@
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Usuarios<span class="caret"></span></a>
                   <ul class="dropdown-menu">
-                  <li><a href='<c:url value="/usuarios/administradorList"/>'>Administrador</a></li>
-					 <li><a href='<c:url value="/usuarios/profesionalList"/>' >Profesional</a></li>
-				 	 <li><a href='<c:url value="/usuarios/pacienteList"/>' >Paciente</a></li>
+                  <li><a href='<c:url value="${pageContext.request.contextPath}/usuarios/administradorList"/>'>Administrador</a></li>
+					 <li><a href='<c:url value="${pageContext.request.contextPath}/usuarios/profesionalList"/>' >Profesional</a></li>
+				 	 <li><a href='<c:url value="${pageContext.request.contextPath}/usuarios/pacienteList"/>' >Paciente</a></li>
                     <li role="separator" class="divider"></li>
-                    <li><a href='<c:url value="/usuarios/usuariosList"/>' >Todos los Usuarios</a></li>
+                    <li><a href='<c:url value="${pageContext.request.contextPath}/usuarios/usuariosList"/>' >Todos los Usuarios</a></li>
                     
                   </ul>
                 </li>
@@ -50,14 +47,9 @@
 
       </div>
     </div>
-    
+    <!-- 
 	<sec:authorize access="isAuthenticated()">
 	    <sec:authentication property="principal" var="principal"/>
 	    	<c:set var="usuarioSession" value="${principal}" scope="session"/>
-   
+    -->
     </sec:authorize>
-    
-    
-    
-    
-    

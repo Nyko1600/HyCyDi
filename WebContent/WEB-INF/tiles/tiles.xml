@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+       
+<tiles-definitions>
+
+	<!-- Template del sistema web -->
+	<definition name="default" template="/WEB-INF/layouts/defaultLayout.jsp">
+	    <put-attribute name="title" value="Tiles tutorial homepage" />
+	    <put-attribute name="scriptFirst" value="" />
+	    <put-attribute name="header" value="/WEB-INF/layouts/header.jsp" />
+	    <put-attribute name="menu" value="/WEB-INF/layouts/menu.jsp" />
+	    <put-attribute name="body" value="" />
+	    
+		<!-- Style base -->
+		<put-list-attribute name="stylesheets">
+			<add-attribute value="/resources/css/bootstrap.min.css" />
+			<add-attribute value="/resources/css/bootstrap-theme.min.css" />
+			<add-attribute value="/resources/css/custom.css" />
+			<add-attribute value="/resources/css/font-awesome.css" />
+		</put-list-attribute>
+		
+		<!-- JavaScript base -->
+		<put-list-attribute name="javascripts">
+			<add-attribute value="/resources/js/jquery.js" />
+			<add-attribute value="/resources/js/jquery-1.12.0.min.js" />
+			<add-attribute value="/resources/js/jquery-ui.js" />
+			<add-attribute value="/resources/js/bootstrap.js" />
+			<add-attribute value="/resources/js/scriptLogin.js" />
+		</put-list-attribute>
+		
+	</definition>
+		
+	<definition name="login" extends="default">
+	    <put-attribute name="title" value="Sistema Login" />
+	    <put-attribute name="body" value="/WEB-INF/views/login.jsp" />
+	    
+	    <!-- Style base -->
+		<put-list-attribute name="stylesheets">
+			<add-attribute value="/resources/css/bootstrap.min.css" />
+			<add-attribute value="/resources/css/bootstrap-theme.min.css" />
+			<add-attribute value="/resources/css/custom.css" />
+			<add-attribute value="/resources/css/login.css" />
+		</put-list-attribute>
+		
+		<!-- JavaScript base -->
+		<put-list-attribute name="javascripts">
+			<add-attribute value="/resources/js/jquery.js" />
+			<add-attribute value="/resources/js/jquery-1.12.0.min.js" />
+			<add-attribute value="/resources/js/jquery-ui.js" />
+			<add-attribute value="/resources/js/bootstrap.js" />
+			<add-attribute value="/resources/js/scriptLogin.js" />
+		</put-list-attribute>
+  	</definition>
+  	
+  	<definition name="sistema" extends="default">
+	    <put-attribute name="title" value="Sistema Hospital" />
+	    <put-attribute name="body" value="/WEB-INF/views/prueba.jsp" />
+  	</definition>
+  
+  	<definition name="usuarios_view" extends="default">
+	    <put-attribute name="title" value="Usuarios" />
+	    <put-attribute name="body" value="/WEB-INF/views/jsp/usuario/usuariosView.jsp" />
+	    <put-list-attribute name="other_js">
+			<add-attribute value="/resources/js/script_usuario.js" />
+		</put-list-attribute>
+  	</definition>
+</tiles-definitions>

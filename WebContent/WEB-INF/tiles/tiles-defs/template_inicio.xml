@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+       
+<tiles-definitions>
+	
+	<!-- Template del inicio de la web -->
+	<definition name="presentation" template="/WEB-INF/views/jsp/template/templateInicio.jsp">
+		<put-attribute name="title" value="Hospital Malargües" />
+	    <put-attribute name="header" value="/WEB-INF/views/jsp/template/header.jsp" />
+	    <put-attribute name="body" value="" />
+	    		
+		<!-- Style base -->
+		<put-list-attribute name="stylesheets">
+			<add-attribute value="/resources/css/bootstrap.min.css" />
+			<add-attribute value="/resources/css/bootstrap-theme.min.css" />
+			<add-attribute value="/resources/css/style.css" />
+			<add-attribute value="/resources/css/font-awesome.css" />
+			
+		</put-list-attribute>
+		
+		<!-- JavaScript base -->
+		<put-list-attribute name="javascripts">
+			<add-attribute value="/resources/js/jquery.js" />
+			<add-attribute value="/resources/js/jquery-1.12.0.min.js" />
+			<add-attribute value="/resources/js/jquery-ui.js" />
+			<add-attribute value="/resources/js/bootstrap.js" />
+		</put-list-attribute>
+	</definition>
+	
+	<definition name="index" extends="presentation">
+	    <put-attribute name="title" value="Hospital Malargüe" />
+	    <put-attribute name="body" value="/WEB-INF/views/index.jsp" />
+  	</definition>
+	
+</tiles-definitions>

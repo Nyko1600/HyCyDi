@@ -86,6 +86,8 @@ public class HuellaService {
 			    	
 			        Usuario user = new Usuario();// = new Usuario();
 			        user = usuarioDao.findById(huellaList.getId_usuario());
+			        user.setDomicilio(null);
+			        user.setHistoria(null);
 			        return user;
 			    }
 			}

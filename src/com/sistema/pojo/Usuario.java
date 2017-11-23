@@ -11,39 +11,39 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import org.codehaus.jackson.annotate.JsonIgnore;
-import org.codehaus.jackson.map.annotate.JsonDeserialize;
-import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.springframework.context.annotation.Scope;
 
-import com.sistema.util.JsonDateDeserialize;
-import com.sistema.util.JsonDateSerialize;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+
 
 
 
 @Entity
 @Table(name="usuario")
 @Scope("session")
+@JsonIgnoreProperties({"password", "fechaAlta","domicilio","historia","nroDoc"})
 public class Usuario{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id_usuario;
-	@Column(name="nro_doc")
+	@JsonProperty("nro_doc")
 	private int nro_doc;
 	private int matricula;
 	private String nombre;
 	private String apellido1;
 	private String apellido2;
 	private String mail;
-	@JsonIgnore
+	//@JsonIgnore
 	private String password;
 	private String foto;
 	private String telefono;
 	private String sexo;
 	private String fechaNacimiento;
-	@JsonIgnore
+	//@JsonIgnore
 	private Timestamp fechaAlta;
 	private String grupoSanguineo;
 	private String estadoCivil;
@@ -52,11 +52,11 @@ public class Usuario{
 	private String estado;
 	
 	//Carga Temprana.... relación tipo casacada.
-	@JsonIgnore
+	//@JsonIgnore
 	@OneToOne(mappedBy = "usuario", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Domicilio domicilio;
 	
-	@JsonIgnore
+	//@JsonIgnore
 	@OneToOne(mappedBy = "usuario", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private HistoriaClinica historia;
 	
@@ -128,11 +128,11 @@ public class Usuario{
 	public void setMail(String mail) {
 		this.mail = mail;
 	}
-	@JsonIgnore
+	//@JsonIgnore
 	public String getPassword() {
 		return password;
 	}
-	@JsonIgnore
+	//@JsonIgnore
 	public void setPassword(String password) {
 		this.password = password;
 	}
@@ -161,14 +161,14 @@ public class Usuario{
 		this.fechaNacimiento = fechaNacimiento;
 	}
 	//@JsonSerialize(using=JsonDateSerialize.class)
-	@JsonIgnore
+	//@JsonIgnore
 	public Timestamp getFechaAlta() {
 		return fechaAlta;
 	}
 	
 
 	//@JsonDeserialize(using = JsonDateDeserialize.class, as = Timestamp.class)
-	@JsonIgnore
+	//@JsonIgnore
 	public void setFechaAlta(Timestamp fechaAlta) {
 		this.fechaAlta = fechaAlta;
 	}
@@ -203,21 +203,21 @@ public class Usuario{
 		this.estado = estado;
 	}
 
-	@JsonIgnore
+	//@JsonIgnore
 	public Domicilio getDomicilio() {
 		return domicilio;
 	}
-	
-	
+
+	//@JsonIgnore
 	public void setDomicilio(Domicilio domicilio) {
 		this.domicilio = domicilio;
 	}
 
-	@JsonIgnore
+	//@JsonIgnore
 	public HistoriaClinica getHistoria() {
 		return historia;
 	}
-
+	//@JsonIgnore
 	public void setHistoria(HistoriaClinica historia) {
 		this.historia = historia;
 	}

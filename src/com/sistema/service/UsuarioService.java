@@ -66,7 +66,8 @@ public class UsuarioService {
 	}
 	
 	public Usuario findByDNI(int dni) {
-		return usuarioDao.findByDNI(dni);
+		Usuario user = usuarioDao.findByDNI(dni); 
+		return user;
 	}
 
 	public Usuario findByDNIPacientes(int dni) {
